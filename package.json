@@ -1,0 +1,11 @@
+{
+  "name": "tung_chung_times_tables",
+  "version": "0.0.1",
+  "description": "Tung Chung Caribbean Coast shuttle times tables",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest test"
+  },
+  "author": "DAILY Pierre",
+  "license": "ISC"
+}
