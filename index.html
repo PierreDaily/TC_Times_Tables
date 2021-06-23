@@ -4,8 +4,44 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./js/index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" type="text/css" href="./dist/style.css" />
+    <script defer src="./js/index.js"></script>
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <div class="layout-top timer">
+        <span class="timer__count"></span>
+      </div>
+      <div class="layout-bottom">
+        <ul class="tables">
+          <!-- <li class="tables__item">
+            <span class="tables__count">3 min</span
+            ><span class="tables__time">1:30pm</span>
+          </li> -->
+        </ul>
+      </div>
+      <svg class="svg-clip" width="0" height="0">
+        <defs>
+          <clipPath id="clip" clipPathUnits="objectBoundingBox">
+            <path
+              d="M 0 0 H 1.125 V 0.787 C 0.8989 0.8963 0.7755 0.899 0.5625
+            0.787 C 0.3461 0.6875 0.2229 0.6899 0 0.787 V 0 Z"
+            />
+          </clipPath>
+        </defs>
+      </svg>
+    </main>
+  </body>
 </html>

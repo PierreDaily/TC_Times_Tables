@@ -1,0 +1,53 @@
+@use "variable";
+
+.timer {
+  background: variable.$linear-gradient-primary;
+  clip-path: url(#clip);
+
+  &__count {
+    color: variable.$color-white;
+    display: block;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    padding-top: 30%;
+    text-align: center;
+  }
+}
+
+.tables {
+  margin: 0 28px 0 28px;
+  padding: 0;
+
+  &__count {
+    align-items: center;
+    background: variable.$linear-gradient-primary;
+    color: variable.$color-white;
+    display: flex;
+    flex-grow: 2;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    justify-content: center;
+    max-width: 100px;
+  }
+
+  &__item {
+    border: 1px solid #dedee6;
+    border-radius: 5px;
+    display: flex;
+    height: 52px;
+    margin-bottom: 13px;
+  }
+
+  &__time {
+    align-items: center;
+    color: variable.$color-black;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    flex-grow: 6;
+    justify-content: center;
+  }
+}

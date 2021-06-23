@@ -1,0 +1,13 @@
+@use "component";
+@use "layout";
+@use "variable";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: variable.$font-primary;
+  max-width: 600px;
+  margin: auto;
+}
