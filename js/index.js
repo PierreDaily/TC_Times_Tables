@@ -19,18 +19,19 @@ function timesTables2Date(timeString) {
   return newDate;
 }
 
-function formatTime(date) {
-  return `${date.getHours()}:${
-    date.getMinutes() >= 10
-      ? date.getMinutes()
-      : "0" + String(date.getMinutes())
-  }`;
-}
+// function formatTime(date) {
+//   return `${date.getHours()}:${
+//     date.getMinutes() >= 10
+//       ? date.getMinutes()
+//       : "0" + String(date.getMinutes())
+//   }`;
+// }
 
 /**
  *
  * @param {number} timeLeft
  * @param {string} time
+ * @param {HTMLElement} parent
  */
 function displayTablesElement(timeLeft, time, parent) {
   const li = document.createElement("li");
@@ -54,9 +55,9 @@ function formatTime(date) {
   const hours = Math.floor(date.getHours());
   const minutes = date.getMinutes();
 
-  return `${hours > 12 ? hours - 12 : hours}:${minutes} ${
-    hours > 12 ? "pm" : "am"
-  }`;
+  return `${hours > 12 ? hours - 12 : hours}:${
+    date.getMinutes() >= 10 ? minutes : "0" + String(minutes)
+  } ${hours > 12 ? "pm" : "am"}`;
 }
 const ul = document.getElementsByClassName("tables")[0];
 
@@ -77,7 +78,7 @@ fetch("./public/timestables.json")
       const seconds = (date.valueOf() - now.valueOf()) / 1000;
       const minutes = seconds / 60;
       const minutesLeft = Math.floor(minutes) + 1;
-      console.log(minutesLeft + 1);
+
       displayTablesElement(minutesLeft, formatTime(date), ul);
       if (idx === 0) {
         document.getElementsByClassName(
