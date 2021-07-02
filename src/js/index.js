@@ -61,7 +61,7 @@ function formatTime(date) {
 }
 const ul = document.getElementsByClassName("tables")[0];
 
-fetch("./public/timestables.json")
+fetch("timestables.json")
   .then((data) => data.json())
   .then((data) => {
     const timesTables = isWeekDay(now)

@@ -2,10 +2,21 @@
   "name": "tung_chung_times_tables",
   "version": "0.0.1",
   "description": "Tung Chung Caribbean Coast shuttle times tables",
-  "main": "index.js",
+  "main": "dist/index.html",
+  "default": "dist/index.html",
   "scripts": {
-    "test": "jest test"
+    "test": "jest test",
+    "start": "parcel serve ./src/index.html",
+    "build": "parcel build ./src/index.html"
   },
   "author": "DAILY Pierre",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-beta.2",
+    "parcel": "^2.0.0-beta.2",
+    "parcel-reporter-static-files-copy": "^1.3.0"
+  },
+  "dependencies": {
+    "serve": "^12.0.0"
+  }
 }
