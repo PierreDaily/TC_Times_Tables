@@ -19,14 +19,6 @@ function timesTables2Date(timeString) {
   return newDate;
 }
 
-// function formatTime(date) {
-//   return `${date.getHours()}:${
-//     date.getMinutes() >= 10
-//       ? date.getMinutes()
-//       : "0" + String(date.getMinutes())
-//   }`;
-// }
-
 /**
  *
  * @param {number} timeLeft
@@ -72,18 +64,26 @@ fetch("timestables.json")
       return now.valueOf() - elem.valueOf() <= 0;
     });
 
-    const filterTables = timesTables.slice(nextBusIndex);
+    const noMoreBus = nextBusIndex === -1 ? true : false;
 
-    filterTables.forEach((date, idx) => {
-      const seconds = (date.valueOf() - now.valueOf()) / 1000;
-      const minutes = seconds / 60;
-      const minutesLeft = Math.floor(minutes) + 1;
+    if (noMoreBus) {
+      document.getElementsByClassName(
+        "timer__count"
+      )[0].textContent = `No bus until tomorow :)`;
+    } else {
+      const filterTables = timesTables.slice(nextBusIndex);
 
-      displayTablesElement(minutesLeft, formatTime(date), ul);
-      if (idx === 0) {
-        document.getElementsByClassName(
-          "timer__count"
-        )[0].textContent = `${String(minutesLeft)} minutes`;
-      }
-    });
+      filterTables.forEach((date, idx) => {
+        const seconds = (date.valueOf() - now.valueOf()) / 1000;
+        const minutes = seconds / 60;
+        const minutesLeft = Math.floor(minutes) + 1;
+
+        displayTablesElement(minutesLeft, formatTime(date), ul);
+        if (idx === 0) {
+          document.getElementsByClassName(
+            "timer__count"
+          )[0].textContent = `${String(minutesLeft)} minutes`;
+        }
+      });
+    }
   });
