@@ -1,7 +1,12 @@
-const now = new Date();
+import DataJSON from "../../static/timestables.json";
 
-const weekEndDays = [0, 6];
+const defaultPhase = "phase-2-3";
 
+/**
+ *
+ * @param {Date} date
+ * @returns {boolean}
+ */
 function isWeekDay(date) {
   const weekEndDays = [0, 6];
 
@@ -10,6 +15,11 @@ function isWeekDay(date) {
   return true;
 }
 
+/**
+ *
+ * @param {string} timeString
+ * @returns {Date}
+ */
 function timesTables2Date(timeString) {
   const newDate = new Date();
   const [hours, minutes] = timeString.split(":");
@@ -21,17 +31,17 @@ function timesTables2Date(timeString) {
 
 /**
  *
- * @param {number} timeLeft
- * @param {string} time
+ * @param {number} minutesLeft - minutes left before the next bus
+ * @param {string} time - custom time string to be displayed, ex: 12:25pm
  * @param {HTMLElement} parent
  */
-function displayTablesElement(timeLeft, time, parent) {
+function displayTablesElement(minutesLeft, time, parent) {
   const li = document.createElement("li");
   li.classList = "tables__item";
 
   const countElem = document.createElement("span");
   countElem.classList = "tables__count";
-  countElem.textContent = `${String(timeLeft)} min`;
+  countElem.textContent = `${String(minutesLeft)} min`;
 
   const timeElem = document.createElement("span");
   timeElem.classList = "tables__time";
@@ -43,6 +53,34 @@ function displayTablesElement(timeLeft, time, parent) {
   }
 }
 
+/**
+ * @returns {string} - returns your favorite phase
+ */
+function getFavoritePhase() {
+  return localStorage.getItem("phase") || defaultPhase;
+}
+
+function setFavoritePhase(val) {
+  if (val) {
+    return localStorage.setItem("phase", val);
+  }
+
+  return localStorage.setItem("phase", defaultPhase);
+}
+
+function selectPhase(val) {
+  ul.innerHTML = "";
+  setFavoritePhase("phase-2-3");
+  displayTimeTables("phase-2-3");
+  phase45.classList.remove("phase--active");
+  phase23.classList.add("phase--active");
+}
+
+/**
+ *
+ * @param {Date} date
+ * @returns {string}
+ */
 function formatTime(date) {
   const hours = Math.floor(date.getHours());
   const minutes = date.getMinutes();
@@ -53,37 +91,58 @@ function formatTime(date) {
 }
 const ul = document.getElementsByClassName("tables")[0];
 
-fetch("timestables.json")
-  .then((data) => data.json())
-  .then((data) => {
-    const timesTables = isWeekDay(now)
-      ? data.weekDay.map(timesTables2Date)
-      : data.weekEndAndPublicHoliday.map(timesTables2Date);
+function displayTimeTables(selectedPhase) {
+  const now = new Date();
 
-    const nextBusIndex = timesTables.findIndex((elem) => {
-      return now.valueOf() - elem.valueOf() <= 0;
-    });
+  const timesTables = isWeekDay(now)
+    ? DataJSON[selectedPhase].weekDay.map(timesTables2Date)
+    : DataJSON[selectedPhase].weekEndAndPublicHoliday.map(timesTables2Date);
 
-    const noMoreBus = nextBusIndex === -1 ? true : false;
-
-    if (noMoreBus) {
-      document.getElementsByClassName(
-        "timer__count"
-      )[0].textContent = `No bus until tomorow :)`;
-    } else {
-      const filterTables = timesTables.slice(nextBusIndex);
-
-      filterTables.forEach((date, idx) => {
-        const seconds = (date.valueOf() - now.valueOf()) / 1000;
-        const minutes = seconds / 60;
-        const minutesLeft = Math.floor(minutes) + 1;
-
-        displayTablesElement(minutesLeft, formatTime(date), ul);
-        if (idx === 0) {
-          document.getElementsByClassName(
-            "timer__count"
-          )[0].textContent = `${String(minutesLeft)} minutes`;
-        }
-      });
-    }
+  const nextBusIndex = timesTables.findIndex((elem) => {
+    return now.valueOf() - elem.valueOf() <= 0;
   });
+
+  const noMoreBus = nextBusIndex === -1 ? true : false;
+
+  if (noMoreBus) {
+    document.getElementsByClassName(
+      "timer__count"
+    )[0].textContent = `No bus until tomorow :)`;
+  } else {
+    const filterTables = timesTables.slice(nextBusIndex);
+
+    filterTables.forEach((date, idx) => {
+      const seconds = (date.valueOf() - now.valueOf()) / 1000;
+      const minutes = seconds / 60;
+      const minutesLeft = Math.floor(minutes) + 1;
+
+      displayTablesElement(minutesLeft, formatTime(date), ul);
+      if (idx === 0) {
+        document.getElementsByClassName(
+          "timer__count"
+        )[0].textContent = `${String(minutesLeft)} minutes`;
+      }
+    });
+  }
+}
+
+displayTimeTables(getFavoritePhase());
+
+const phase23 = document.getElementById("phase-2-3");
+const phase45 = document.getElementById("phase-4-5");
+
+phase23.addEventListener("click", () => {
+  ul.innerHTML = "";
+  setFavoritePhase("phase-2-3");
+  displayTimeTables("phase-2-3");
+  phase45.classList.remove("phase--active");
+  phase23.classList.add("phase--active");
+});
+
+phase45.addEventListener("click", () => {
+  ul.innerHTML = "";
+  setFavoritePhase("phase-4-5");
+  displayTimeTables("phase-4-5");
+  phase23.classList.remove("phase--active");
+  phase45.classList.add("phase--active");
+});

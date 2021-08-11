@@ -1,5 +1,6 @@
 @use "component";
 @use "layout";
+@use "typo";
 @use "variable";
 
 * {
@@ -8,6 +9,21 @@
 
 body {
   font-family: variable.$font-primary;
-  max-width: 600px;
+  max-width: variable.$body-max-width;
   margin: auto;
+}
+
+footer {
+  background-color: variable.$color-white;
+  bottom: 0;
+  box-shadow: variable.$box-shadow-footer;
+  display: flex;
+  height: 50px;
+  max-width: variable.$body-max-width;
+  position: fixed;
+  width: 100%;
+}
+
+.hidden {
+  position: absolute;
 }

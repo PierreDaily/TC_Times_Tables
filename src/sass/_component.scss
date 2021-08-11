@@ -1,5 +1,26 @@
 @use "variable";
 
+.phase {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+
+  &--active {
+    color: variable.$color-primary;
+    .phase__icon-path {
+      fill: variable.$color-primary;
+    }
+  }
+
+  &__title {
+    text-transform: capitalize;
+  }
+}
+
 .timer {
   background: variable.$linear-gradient-primary;
   clip-path: url(#clip);
@@ -10,7 +31,7 @@
     font-size: 48px;
     font-style: normal;
     font-weight: 500;
-    padding-top: 30%;
+    padding-top: 14vh;
     text-align: center;
   }
 }
