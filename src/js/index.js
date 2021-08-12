@@ -1,6 +1,10 @@
 import DataJSON from "../../static/timestables.json";
 
+const phase23 = document.getElementById("phase-2-3");
+const phase45 = document.getElementById("phase-4-5");
 const defaultPhase = "phase-2-3";
+const refreshDelay = 20000;
+let refreshTimeout;
 
 /**
  *
@@ -70,10 +74,30 @@ function setFavoritePhase(val) {
 
 function selectPhase(val) {
   ul.innerHTML = "";
-  setFavoritePhase("phase-2-3");
-  displayTimeTables("phase-2-3");
-  phase45.classList.remove("phase--active");
-  phase23.classList.add("phase--active");
+  setFavoritePhase(val);
+  displayTimeTables(val);
+
+  switch (val) {
+    case "phase-2-3": {
+      phase45.classList.remove("phase--active");
+      phase23.classList.add("phase--active");
+      if (refreshTimeout) {
+        clearTimeout(refreshTimeout);
+      }
+      refreshTimeout = setTimeout(() => selectPhase(val), refreshDelay);
+      break;
+    }
+
+    case "phase-4-5": {
+      phase45.classList.add("phase--active");
+      phase23.classList.remove("phase--active");
+      if (refreshTimeout) {
+        clearTimeout(refreshTimeout);
+      }
+      refreshTimeout = setTimeout(() => selectPhase(val), refreshDelay);
+      break;
+    }
+  }
 }
 
 /**
@@ -126,23 +150,12 @@ function displayTimeTables(selectedPhase) {
   }
 }
 
-displayTimeTables(getFavoritePhase());
-
-const phase23 = document.getElementById("phase-2-3");
-const phase45 = document.getElementById("phase-4-5");
+selectPhase(getFavoritePhase());
 
 phase23.addEventListener("click", () => {
-  ul.innerHTML = "";
-  setFavoritePhase("phase-2-3");
-  displayTimeTables("phase-2-3");
-  phase45.classList.remove("phase--active");
-  phase23.classList.add("phase--active");
+  selectPhase("phase-2-3");
 });
 
 phase45.addEventListener("click", () => {
-  ul.innerHTML = "";
-  setFavoritePhase("phase-4-5");
-  displayTimeTables("phase-4-5");
-  phase23.classList.remove("phase--active");
-  phase45.classList.add("phase--active");
+  selectPhase("phase-4-5");
 });

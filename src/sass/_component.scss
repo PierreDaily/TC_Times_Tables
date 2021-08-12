@@ -45,12 +45,12 @@
     background: variable.$linear-gradient-primary;
     color: variable.$color-white;
     display: flex;
-    flex-grow: 2;
+    flex-basis: 25%;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     justify-content: center;
-    max-width: 100px;
+    min-width: 100px;
   }
 
   &__item {
@@ -68,7 +68,7 @@
     font-weight: 500;
     font-size: 20px;
     display: flex;
-    flex-grow: 6;
+    flex-basis: 75%;
     justify-content: center;
   }
 }

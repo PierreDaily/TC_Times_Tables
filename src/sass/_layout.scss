@@ -1,7 +1,7 @@
 @use "variable";
 
 .layout-bottom {
-  height: 60vh;
+  height: calc(60vh - #{variable.$footer-height});
   overflow-y: auto;
   width: 100%;
 }
